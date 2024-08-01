@@ -1,0 +1,338 @@
+// // /* component-name.component.scss */
+
+// .banner-area-two {
+//     /* Set background image */
+//     background-image: url('/assets/img/home-three/buildings .jpg');
+    
+//     /* Adjust background properties */
+//     background-size: cover; /* Cover the entire div */
+//     background-position: center; /* Center the image */
+//     background-repeat: no-repeat; /* Do not repeat the image */
+    
+//     /* Set dimensions for the div */
+//     width: 100%;
+//     height: 100vh; /* Adjust height as needed */
+//   }
+.banner-area-two{
+  overflow-x:fixed; 
+
+}
+
+.section-title{
+justify-content:start ;
+}
+.table-responsive {
+    overflow-x:fixed; 
+    border-color: red;
+  }
+
+  // .table{
+  //   border-color: rgb(255, 72, 0);
+
+  // }
+table {
+  td {
+    padding: 4px 0px; 
+  }
+}
+
+ // owl-carousel
+.images-list {
+  width: 350px;
+  height: 240px;
+  object-fit:cover; 
+  position: relative;
+  overflow: hidden;
+  // padding-left: 3px;
+}
+
+// .client-img{
+//   width: 520px;
+//   height: 455px;
+//   object-fit:fill; 
+//   position: relative;
+//   overflow: hidden;
+// }
+
+.place-list-item{
+  width: 350px;
+  display: inline-block;
+  a {
+    img{
+        height: 100%; 
+    object-fit:cover; 
+    overflow: hidden;
+    object-position: top;
+    }
+  }
+
+
+}
+
+// table filter box
+input {
+  font-size: 11px; 
+
+  &::placeholder {
+    font-size: 13px; 
+    color: gray; 
+  }
+}
+
+.project-title{
+  color: black;
+  font-size: 50PX;
+}
+
+.banner-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+  /* Dropdown button */
+
+  .dropdowns{
+    display:flex;
+    flex-direction: row;
+    margin-left: 5vw;
+  }
+  .dropdown-toggle {
+   background-color: #007BFF;
+  //  color: #333;
+   color: white;
+
+   padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown menu */
+  .dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #f8f9fa;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(235, 75, 6, 0.2);
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin-right: 50px;
+    text-align: center;
+    // height: 30vh;
+    max-height:30vh ;
+    overflow-y: auto;
+  }
+  
+  /* Dropdown menu items */
+  .dropdown-menu li {
+    padding: 12px 16px;
+    cursor: pointer;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  /* Style the dropdown items on hover */
+  .dropdown-menu li:hover {
+    // background-color: #f95b0cd6;
+     background-color: #007BFF;
+  }
+
+  /////////////////////////////////
+.direction{
+  display: flex;
+  overflow-x: auto;
+  margin-left: 4vw;
+  margin-right: 4vw;
+}
+.carousel {
+  .slick-slide {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow-x: scroll;
+  }
+
+  .place-list-item {
+    margin: 0 15px;
+  }
+}
+
+
+
+// NEW SLIDE STYLE
+.apartment-area{
+  display: flex;
+  flex-direction: row;
+  align-items:start;
+  
+}
+.place-list-item-aprt{
+  width: 350px;
+  display: inline-block;
+  border: 1px solid rgba(149, 139, 139, 0.248);
+  border-radius: 5%;
+  // Ist Div
+  .images{
+ 
+    width: 350px;
+    height: 240px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: -10px;
+    p{
+      padding: 5px;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(243, 81, 36,0.8);
+      border-radius: 10px;
+      color: #f8f9fa;
+      font-size: smaller;
+
+    }
+    a {
+      img{
+          // height: 350px;
+          // width: 345px; 
+          height:100%;
+          width:100%;
+          padding-right: 0.5%;
+      object-fit:cover; 
+      overflow: hidden;
+      object-position: top;
+      border-top-left-radius: 16px; /* Adjust the value as needed */
+      border-top-right-radius: 16px; 
+      }
+    }
+
+      .place-profile{
+        top: 0.5rem; left: 0;
+        display: flex;
+        position: absolute;
+        margin: 5px;
+
+        .developer-name{
+          max-width: 150px;
+        }
+
+      }
+  
+      .place-status-aprt{
+        top: 0.5rem; right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        margin: 5px;
+
+      }
+
+  }
+  // IInd Div
+  .content{
+    margin: 5px;
+    padding: 10px;
+    span{
+      a{
+               
+        color: #007BFF
+
+      }
+    }
+      a{
+    color: black;
+  }
+
+  .flaticon-cursor{
+    color: rgb(243, 81, 36);
+  }
+  }
+
+
+}
+
+.place-list-item-aprt:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect on hover */
+}
+.fa-heart {
+  color: red;
+}
+
+// Modify Scroller
+::-webkit-scrollbar {
+  width:0px; /* Adjust the width as needed */
+}
+
+.scroll-button {
+  padding: 10px;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 4vw;
+  border-style: hidden;  background-color:rgba(255, 255, 255, 0); 
+}
+
+.arrow-right{
+  position: absolute;
+  right: 20px;
+  top: 90px;
+  z-index: 50;
+}
+
+.arrow-left{
+  position: absolute;
+  left: 28px;
+  top: 90px;
+  z-index: 50;
+}
+
+
+@media only screen and (max-width : 767px) {
+
+  .direction{
+    display: flex;
+    overflow-x: auto;
+    margin-left: 0vw;
+    margin-right: 0vw;
+  
+  }
+   /* Dropdown button */
+   .dropdown-toggle {
+    background-color: #007BFF;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10vw;
+  }
+  .dropdowns{
+    display: flex;
+    flex-direction: column;
+  }
+
+
+.arrow-left{
+  left:-7vw;
+}
+.arrow-right{
+right:-7vw;
+  
+}
+.scroll-button{
+  font-size:40px;
+}  
+
+
+}

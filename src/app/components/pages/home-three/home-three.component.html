@@ -1,0 +1,2222 @@
+<app-navbar-style-two></app-navbar-style-two>
+
+<div class="banner-area-two mb-4">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <div
+                    class="banner-content banner-content-ptb align-items-center text-center"
+                >
+                    <p>Welcome to Propyfinder</p>
+                    <p class="project-title">
+                        Find Your <BR /><b> Property Developer</b>
+                    </p>
+
+                    <div class="dropdowns col-lg-6">
+                        <div class="row col-lg-6 dropdown-container">
+                            <div class="dropdown col-lg-11 col-sm-8">
+                                <li class="dropdown-toggle" type="button">
+                                    {{
+                                        selectedDeveloper
+                                            ? selectedDeveloper.developer_name
+                                            : "Choose Developer"
+                                    }}
+                                </li>
+                                <ul class="dropdown-menu col-lg-11">
+                                    <li
+                                        *ngFor="let dev of mainDeveloperList$"
+                                        (click)="selectDeveloper(dev)"
+                                    >
+                                        {{ dev.developer_name }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row col-lg-6 dropdown-container">
+                            <div class="dropdown col-lg-11 col-sm-8">
+                                <li class="dropdown-toggle" type="button">
+                                    {{
+                                        selectedCity
+                                            ? selectedCity.city
+                                            : "Choose City"
+                                    }}
+                                </li>
+                                <ul class="dropdown-menu col-lg-11">
+                                    <li
+                                        *ngFor="let city of citiesList$"
+                                        (click)="selectCity(city)"
+                                    >
+                                        {{ city.city }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="banner-img">
+        <img src="assets/img/home-three/home-three2.png" alt="Images" />
+    </div>
+    <!-- <div class="banner-img"><img src="assets/img/home-three/buildings .jpg" alt="Images"></div> -->
+</div>
+
+<!-- FILTERED PROPERTIES WITH DEVELOPER -->
+
+<section class="place-list-three" *ngIf="loadFilterDeveloperProperty">
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>
+                {{ developerPropertyesList$[0]?.developer_name }}'s
+                <b> Properties</b>
+            </h2>
+            <p>
+                Discover our handpicked selection of ready-to-move properties
+                that cater to your immediate housing needs. These homes are
+                fully constructed and ready for you to move in, offering the
+                perfect solution for those seeking a quick and hassle-free
+                transition.
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ngx-slick-carousel class="carousel">
+
+            <button
+                class="scroll-button arrow-left"
+                (click)="scrollLeft(scrollContainer1)"
+            >
+            <i class="fa fa-angle-left"></i>
+            </button>
+
+            <div class="direction" #scrollContainer1>
+                <div
+                    *ngFor="let prop of developerPropertyesList$;let i=index"
+                    class="place-list-item-aprt mx-2"
+                >
+                    <div class="images">
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            class="images-list"
+                        >
+                            <img [src]="prop.image_url" alt="Images" />
+                        </a>
+                        <div class="place-profile">
+                            <!-- <img [src]="prop.image_url" alt="Images" /> -->
+                            <p class="developer-name">By, {{ prop.developer_name }}</p>
+                            <i [ngClass]="{'fa-heart-o': !isHeart1[i], 'fa-heart': isHeart1[i], 'fa': true}" 
+                            (click)="toggleHeart('isHeart1',i)" 
+                            class="mt-2 mx-2"></i>
+                            <i class="fa fa-share-alt mt-2 mr-2"></i>
+                        </div>
+                        <div class="place-status-aprt">
+                            <a routerLink=""
+                                ><p>{{ prop?.status }}</p></a
+                            >
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="place-tag-aprt">
+                            <span>
+                                <a routerLink="/"
+                                    >₹ {{ prop?.builder_price }}</a
+                                >
+                            </span>
+
+                            <div class="apartment-area mb-2">
+                                <a routerLink="/">{{ prop?.apartment }}</a
+                                >&nbsp;&nbsp;&nbsp;
+                                <a routerLink="/">{{ prop?.builtup_area }}</a>
+                            </div>
+                        </div>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            ><h3>{{ prop?.property_name }}</h3></a
+                        >
+                        <p>
+                            <i class="flaticon-cursor"></i> {{ prop?.address }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button
+                class="scroll-button arrow-right"
+                (click)="scrollRight(scrollContainer1)"
+            >
+            <i class="fa fa-angle-right"></i>
+            </button>
+
+        </ngx-slick-carousel>
+    </div>
+</section>
+
+<!-- FILTERED PROPERTIES WITH CITY -->
+
+<section class="place-list-three" *ngIf="loadFilterCityProperty">
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>
+                <b>Latest property related news of </b>{{ selectedCity.city }}
+            </h2>
+            <p>
+                Discover our handpicked selection of new properties that cater
+                to your immediate housing needs. These homes are fully
+                constructed and ready for you to move in, offering the perfect
+                solution for those seeking a quick and hassle-free transition.
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ngx-slick-carousel class="carousel">
+
+            <button
+                class="scroll-button arrow-left"
+                (click)="scrollLeft(scrollContainer2)"
+            >
+            <i class="fa fa-angle-left"></i>
+            </button>
+
+            <div class="direction" #scrollContainer2>
+                <div
+                    *ngFor="let prop of cityPropertiesList$; let i = index"
+                    class="place-list-item-aprt mx-2"
+                >
+                    <div class="images">
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            class="images-list"
+                        >
+                            <img [src]="prop.image_url" alt="Images" />
+                        </a>
+                        <div class="place-profile">
+                            <!-- <img [src]="prop.image_url" alt="Images" /> -->
+                            <p class="developer-name">By, {{ prop.developer_name }}</p>
+                            <i [ngClass]="{'fa-heart-o': !isHeart2[i], 'fa-heart': isHeart2[i], 'fa': true}" 
+                            (click)="toggleHeart('isHeart2',i)" 
+                            class="mt-2 mx-2"></i>
+                            <i class="fa fa-share-alt mt-2 mr-2"></i>
+                        </div>
+                        <div class="place-status-aprt">
+                            <a routerLink=""
+                                ><p>{{ prop?.status }}</p></a
+                            >
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="place-tag-aprt">
+                            <span>
+                                <a routerLink="/"
+                                    >₹ {{ prop?.builder_price }}</a
+                                >
+                            </span>
+
+                            <div class="apartment-area mb-2">
+                                <a routerLink="/">{{ prop?.apartment }}</a
+                                >&nbsp;&nbsp;&nbsp;
+                                <a routerLink="/">{{ prop?.builtup_area }}</a>
+                            </div>
+                        </div>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            ><h3>{{ prop?.property_name }}</h3></a
+                        >
+                        <p>
+                            <i class="flaticon-cursor"></i> {{ prop?.address }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button
+                class="scroll-button arrow-right"
+                (click)="scrollRight(scrollContainer2)"
+            >
+            <i class="fa fa-angle-right"></i>
+            </button>
+
+        </ngx-slick-carousel>
+    </div>
+</section>
+
+<!-- LAUNCH/ Ready to move PROPERTY SLIDER -->
+
+<section    
+    class="place-list-three"
+    *ngIf="launchPropertyList$ && launchPropertyList$.length"
+>
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>Ready to Move <b>Properties</b></h2>
+            <p>
+                Discover our handpicked selection of ready-to-move properties
+                that cater to your immediate housing needs. These homes are
+                fully constructed and ready for you to move in, offering the
+                perfect solution for those seeking a quick and hassle-free
+                transition.
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ngx-slick-carousel class="carousel">
+
+            <button
+                class="scroll-button arrow-left"
+                (click)="scrollLeft(scrollContainer3)"
+            >
+            <i class="fa fa-angle-left"></i>
+            </button>
+
+            <div class="direction" #scrollContainer3>
+                <div
+                    *ngFor="let prop of launchPropertyList$;let i = index"
+                    class="place-list-item-aprt mx-2"
+                >
+                    <div class="images">
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            class="images-list"
+                        >
+                            <img [src]="prop.image_url" alt="Images" />
+                        </a>
+                        <div class="place-profile">
+                            <!-- <img [src]="prop.image_url" alt="Images" /> -->
+                            <p class="developer-name">By, {{ prop.developer_name }}</p>
+                            <i [ngClass]="{'fa-heart-o': !isHeart3[i], 'fa-heart': isHeart3[i], 'fa': true}" 
+                            (click)="toggleHeart('isHeart3',i)" 
+                            class="mt-2 mx-2"></i>
+                            <i class="fa fa-share-alt mt-2 mr-2"></i>
+                        </div>
+                        <div class="place-status-aprt">
+                            <a routerLink=""
+                                ><p>{{ prop?.status }}</p></a
+                            >
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="place-tag-aprt">
+                            <span>
+                                <a routerLink="/"
+                                    >₹ {{ prop?.builder_price }}</a
+                                >
+                            </span>
+
+                            <div class="apartment-area mb-2">
+                                <a routerLink="/">{{ prop?.apartment }}</a
+                                >&nbsp;&nbsp;&nbsp;
+                                <a routerLink="/">{{ prop?.builtup_area }}</a>
+                            </div>
+                        </div>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            ><h3>{{ prop?.property_name }}</h3></a
+                        >
+                        <p>
+                            <i class="flaticon-cursor"></i> {{ prop?.address }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button
+                class="scroll-button arrow-right"
+                (click)="scrollRight(scrollContainer3)"
+            >
+            <i class="fa fa-angle-right"></i>
+            </button>
+
+        </ngx-slick-carousel>
+    </div>
+</section>
+<!-- 
+<section class="place-list-three pt-45 pb-30 " >
+    <div class="container ">
+        <div class="section-title mb-3 ">
+            <span>Project Lists</span>
+            <h2>Ready to Move <b>Properties</b></h2>
+            <p>Discover our handpicked selection of ready-to-move properties that cater to your immediate housing needs. These homes are fully constructed and ready for you to move in, offering the perfect solution for those seeking a quick and hassle-free transition. </p>
+        </div>
+    </div>
+    <div class="container-fluid ">
+        <div class="place-slider-three  owl-carousel owl-theme pt-30">
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[0]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[0]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[0]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[0]?.developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[0]?.status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[0].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[0].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[0]?.property_id]"><h3>{{launchPropertyList$[0].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[0].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[1]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[1]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[1]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[1].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[1].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[1].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[1].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[1]?.property_id]"><h3>{{launchPropertyList$[1].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[1].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[2]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[2]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[2]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[2].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[2].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[2].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[2].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[2]?.property_id]"><h3>{{launchPropertyList$[2].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[2]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[3]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[3]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[3]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[3].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[3].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[3].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[3].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[3]?.property_id]"><h3>{{launchPropertyList$[3].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[3]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[4]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[4]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[4]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[4].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[4].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[4].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[4].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[4]?.property_id]"><h3>{{launchPropertyList$[4].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[4]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[5]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[5]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[5]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[5].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[5].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[5].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[5].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[5]?.property_id]"><h3>{{launchPropertyList$[5].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[5]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[6]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[6]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[6]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[6].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[6].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[6].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[6].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[6]?.property_id]"><h3>{{launchPropertyList$[6].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[6]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[7]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[7]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[7]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[7].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[7].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[7]?.builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[7].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[7]?.property_id]"><h3>{{launchPropertyList$[7].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[7]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[8]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[8]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[8]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[8].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[8]?.status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[8]?.builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[8].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[8]?.property_id]"><h3>{{launchPropertyList$[8].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[8]?.address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[9]?.property_id]" class="images-list"><img [src]= "launchPropertyList$[9]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "launchPropertyList$[9]?.image_url" alt="Images">
+                        <h3>By, {{launchPropertyList$[9].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{launchPropertyList$[9].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{launchPropertyList$[9].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{launchPropertyList$[9].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', launchPropertyList$[9].property_id]"><h3>{{launchPropertyList$[9].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{launchPropertyList$[9].address}}</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section> -->
+
+<!-- UNDER CONSTRUCTION PROPERTIES -->
+
+<section
+    class="place-list-three"
+    *ngIf="constructionPropertyList$ && constructionPropertyList$.length"
+>
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>Under Construction <b>Properties</b></h2>
+            <p>
+                Explore our exclusive collection of under-construction
+                properties that are set to become your dream homes. These
+                projects offer the unique opportunity to invest early and
+                customize your living space to suit your personal preferences.
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ngx-slick-carousel class="carousel">
+
+            <button
+                class="scroll-button arrow-left"
+                (click)="scrollLeft(scrollContainer4)"
+            >
+            <i class="fa fa-angle-left"></i>
+            </button>
+            <div class="direction" #scrollContainer4>
+                <div
+                    *ngFor="let prop of constructionPropertyList$; let i=index"
+                    class="place-list-item-aprt mx-2 "
+                >
+                    <div class="images">
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            class="images-list"
+                        >
+                            <img [src]="prop.image_url" alt="Images" />
+                        </a>
+                        <div class="place-profile">
+                            <!-- <img [src]="prop.image_url" alt="Images" /> -->
+                            <p class="developer-name">By, {{ prop.developer_name }}</p>
+                            <i [ngClass]="{'fa-heart-o': !isHeart4[i], 'fa-heart': isHeart4[i], 'fa': true}" 
+                            (click)="toggleHeart('isHeart4',i)" 
+                            class="mt-2 mx-2"></i>
+                            <i class="fa fa-share-alt mt-2 mr-2"></i>
+                        </div>
+                        <div class="place-status-aprt">
+                            <a routerLink=""
+                                ><p>{{ prop?.status }}</p></a
+                            >
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="place-tag-aprt">
+                            <span>
+                                <a routerLink="/"
+                                    >₹ {{ prop?.builder_price }}</a
+                                >
+                            </span>
+
+                            <div class="apartment-area mb-2">
+                                <a routerLink="/">{{ prop?.apartment }}</a
+                                >&nbsp;&nbsp;&nbsp;
+                                <a routerLink="/">{{ prop?.builtup_area }}</a>
+                            </div>
+                        </div>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            ><h3>{{ prop?.property_name }}</h3></a
+                        >
+                        <p>
+                            <i class="flaticon-cursor"></i> {{ prop?.address }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button
+                class="scroll-button arrow-right"
+                (click)="scrollRight(scrollContainer4)"
+            >
+            <i class="fa fa-angle-right"></i>
+            </button>
+
+        </ngx-slick-carousel>
+    </div>
+</section>
+
+<!-- 
+<section class="place-list-three pt-50 pb-30" [hidden]="!constructionPropertyList$ && !constructionPropertyList$.length">
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>Under Construction <b>Properties</b></h2>
+            <p>Explore our exclusive collection of under-construction properties that are set to become your dream homes. These projects offer the unique opportunity to invest early and customize your living space to suit your personal preferences. </p>
+        </div>
+    </div>
+
+    <div class="container-fluid ">
+        <div class="place-slider-three  owl-carousel owl-theme pt-30">
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[0].property_id]" class="images-list"><img [src]= "constructionPropertyList$[0]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[0]?.image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[0].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[0].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[0].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[0].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[0].property_id]"><h3>{{constructionPropertyList$[0].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[0].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[1].property_id]" class="images-list"><img [src]= "constructionPropertyList$[1]?.image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[1]?.image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[1].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[1].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[1].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[1].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[1].property_id]"><h3>{{constructionPropertyList$[1].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[1].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[2].property_id]" class="images-list"><img [src]= "constructionPropertyList$[2].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[2].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[2].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[2].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[2].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[2].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[2].property_id]"><h3>{{constructionPropertyList$[2].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[2].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[3].property_id]" class="images-list"><img [src]= "constructionPropertyList$[3].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[3].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[3].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[3].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[3].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[3].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[3].property_id]"><h3>{{constructionPropertyList$[3].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[3].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[4].property_id]" class="images-list"><img [src]= "constructionPropertyList$[4].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[4].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[4].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[4].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[4].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[4].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[4].property_id]"><h3>{{constructionPropertyList$[4].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[4].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[5].property_id]" class="images-list"><img [src]= "constructionPropertyList$[5].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[5].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[5].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[5].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[5].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[5].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[5].property_id]"><h3>{{constructionPropertyList$[5].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[5].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[6].property_id]" class="images-list"><img [src]= "constructionPropertyList$[6].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[6].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[6].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[6].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[6].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[6].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[6].property_id]"><h3>{{constructionPropertyList$[6].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[6].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[7].property_id]" class="images-list"><img [src]= "constructionPropertyList$[7].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[7].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[7].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[7].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[7].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[7].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[7].property_id]"><h3>{{constructionPropertyList$[7].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[7].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[8].property_id]" class="images-list"><img [src]= "constructionPropertyList$[8].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[8].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[8].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[8].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[8].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[8].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[8].property_id]"><h3>{{constructionPropertyList$[8].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[8].address}}</p>
+                </div>
+            </div>
+            <div class="place-list-item"  >
+                <div class="images">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[9].property_id]" class="images-list"><img [src]= "constructionPropertyList$[9].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "constructionPropertyList$[9].image_url" alt="Images">
+                        <h3>By, {{constructionPropertyList$[9].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{constructionPropertyList$[9].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{constructionPropertyList$[9].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{constructionPropertyList$[9].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', constructionPropertyList$[9].property_id]"><h3>{{constructionPropertyList$[9].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{constructionPropertyList$[9].address}}</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section> -->
+
+<!-- BEST SELLING READY PROPERTIES -->
+
+<section
+    class="place-list-three"
+    *ngIf="latestPropertyList$ && latestPropertyList$.length"
+>
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>Best Selling <b>Ready Properties</b></h2>
+            <p>
+                Discover the newest additions to our curated listings, featuring
+                the latest and most exciting properties available
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <ngx-slick-carousel style="display: flex" class="carousel">
+
+            <button
+                class="scroll-button arrow-left"
+                (click)="scrollLeft(scrollContainer5)"
+            >
+            <i class="fa fa-angle-left"></i>
+            </button>
+
+            <div class="direction" #scrollContainer5>
+                <div
+                    *ngFor="let prop of latestPropertyList$; let i = index "
+                    class="place-list-item-aprt mx-2"
+                >
+                    <div class="images">
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            class="images-list"
+                        >
+                            <img [src]="prop.image_url" alt="Images" />
+                        </a>
+                        <div class="place-profile">
+                            <!-- <img [src]="prop.image_url" alt="Images" /> -->
+                            <p class="developer-name">By, {{ prop.developer_name }}</p>
+                            <i [ngClass]="{'fa-heart-o': !isHeart5[i], 'fa-heart': isHeart5[i], 'fa': true}" 
+                            (click)="toggleHeart('isHeart5',i)" 
+                            class="mt-2 mx-2"></i>
+                            <i class="fa fa-share-alt mt-2 mr-2"></i>
+                        </div>
+                        <div class="place-status-aprt">
+                            <a routerLink=""
+                                ><p>{{ prop?.status }}</p></a
+                            >
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="place-tag-aprt">
+                            <span>
+                                <a routerLink="/"
+                                    >₹ {{ prop?.builder_price }}</a
+                                >
+                            </span>
+
+                            <div class="apartment-area mb-2">
+                                <a routerLink="/">{{ prop?.apartment }}</a
+                                >&nbsp;&nbsp;&nbsp;
+                                <a routerLink="/">{{ prop?.builtup_area }}</a>
+                            </div>
+                        </div>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                prop?.property_id
+                            ]"
+                            ><h3>{{ prop?.property_name }}</h3></a
+                        >
+                        <p>
+                            <i class="flaticon-cursor"></i> {{ prop?.address }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+           
+
+            <button
+                class="scroll-button arrow-right"
+                (click)="scrollRight(scrollContainer5)"
+            >
+            <i class="fa fa-angle-right"></i>
+            </button>
+
+        </ngx-slick-carousel>
+    </div>
+</section>
+
+<!-- 
+<section class="place-list-three pt-50 pb-30"[hidden]="!latestPropertyList$ && !latestPropertyList$.length">
+    <div class="container">
+        <div class="section-title mb-3">
+            <span>Project Lists</span>
+            <h2>Best Selling <b>Ready Properties</b></h2>
+            <p>Discover the newest additions to our curated listings, featuring the latest and most exciting properties available </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="place-slider-three  owl-carousel owl-theme pt-30">
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[0].property_id]" class="images-list"><img [src]= "latestPropertyList$[1].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "latestPropertyList$[0].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[0].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink=""><h3>{{latestPropertyList$[0].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[0].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[0].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[0].property_id]"><h3>{{latestPropertyList$[0].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[0].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[5].property_id]" class="images-list"><img [src]= "latestPropertyList$[5].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]= "latestPropertyList$[5].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[5].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[5].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[5].builder_price}}</a></span>
+                        <h3 class="title"> <a routerLink="/">{{latestPropertyList$[5].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[5].property_id]"><h3>{{latestPropertyList$[5].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i>{{latestPropertyList$[5].address}}</p>
+                </div>
+            </div>
+
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[6].property_id]" class="images-list"><img [src]="latestPropertyList$[7].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[6].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[6].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-color-blue">
+                        <a routerLink="/"><h3>{{latestPropertyList$[6].status}}</h3></a> 
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[6].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[6].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[6].property_id]"><h3>{{latestPropertyList$[6].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i>{{latestPropertyList$[6].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.5</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[8].property_id]" class="images-list"><img [src]="latestPropertyList$[8].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[8].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[8].developer_name}}</h3>
+                    </div>
+
+                    <div class="place-status bg-color-blue">
+                        <a routerLink="/"><h3>{{latestPropertyList$[8].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[8].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[8].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[8].property_id]"><h3>{{latestPropertyList$[8].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i>{{latestPropertyList$[8].address}}</p>
+                    
+                </div>
+            </div>
+
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[17].property_id]" class="images-list"><img [src]="latestPropertyList$[17].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[17].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[17].developer_name}}</h3>
+                    </div>
+                    
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[17].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[17].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[17].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[17].property_id]"><h3>{{latestPropertyList$[17].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[17].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[17].property_id]" class="images-list"><img [src]="latestPropertyList$[17].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[17].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[17].developer_name}}</h3>
+                    </div>
+                    
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[17].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[17].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/listing-details">{{latestPropertyList$[17].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[17].property_id]"><h3>{{latestPropertyList$[17].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[17].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[20].property_id]" class="images-list"><img [src]="latestPropertyList$[20].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[20].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[20].developer_name}}</h3>
+                    </div>
+                    
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[20].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[20].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[20].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[20].property_id]"><h3>{{latestPropertyList$[20].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[20].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[23].property_id]" class="images-list"><img [src]="latestPropertyList$[23].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[23].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[23].developer_name}}</h3>
+                    </div>
+                    
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[23].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[23].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[23].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[23].property_id]"><h3>{{latestPropertyList$[23].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[23].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="place-list-item">
+                <div class="images">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[26].property_id]" class="images-list"><img [src]="latestPropertyList$[26].image_url" alt="Images"></a>
+                    
+                    <div class="place-profile">
+                        <img [src]="latestPropertyList$[26].image_url" alt="Images">
+                        <h3>By, {{latestPropertyList$[26].developer_name}}</h3>
+                    </div>
+                    
+                    <div class="place-status bg-dark-orange">
+                        <a routerLink="/"><h3>{{latestPropertyList$[26].status}}</h3></a>
+                    </div>
+
+                    <div class="place-tag">
+                        <ul>
+                            <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                            <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                        </ul>
+                        <span><a routerLink="/">₹ {{latestPropertyList$[26].builder_price}}</a></span>
+                        <h3 class="title"><a routerLink="/">{{latestPropertyList$[26].apartment}}</a></h3>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <a [routerLink]="['/listing-details', latestPropertyList$[26].property_id]"><h3>{{latestPropertyList$[26].property_name}}</h3></a> 
+                    <p><i class="flaticon-cursor"></i> {{latestPropertyList$[26].address}}</p>
+                    <ul class="place-rating">
+                        <li><a routerLink="/">4.9</a></li>
+                        <li>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                            <i class='bx bxs-star icon-color'></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section class="category-box-area" style="overflow-x:auto;"> -->
+<div class="container col-sm-12 my-4" style="overflow-x: auto">
+    <h3 clas="my-3">Explore Best Properties In Area</h3>
+
+    <ng-container
+        *ngIf="mainPropertiesList$ && mainPropertiesList$.length"
+        class="mb-4 table-responsive"
+    >
+        <table class="table table-sm my-3">
+            <caption class="mt-2">
+                Total no. of properties:
+                <b> {{ filteredProperties.length }}</b>
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Developer</th>
+                    <th scope="col">Properties</th>
+                    <th scope="col">BHK</th>
+                    <th scope="col">Price-Range</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Location</th>
+                </tr>
+                <tr scope="col">
+                    <th scope="col"></th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by Developer"
+                            [(ngModel)]="developerFilter"
+                        />
+                    </th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by Properties"
+                            [(ngModel)]="propertiesFilter"
+                        />
+                    </th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by BHK"
+                            [(ngModel)]="bhkFilter"
+                        />
+                    </th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by Price Range"
+                            [(ngModel)]="priceRangeFilter"
+                        />
+                    </th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by status"
+                            [(ngModel)]="statusFilter"
+                        />
+                    </th>
+                    <th scope="col">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Filter by location"
+                            [(ngModel)]="locationFilter"
+                        />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="
+                        let property of filteredProperties
+                            | paginate
+                                : {
+                                      itemsPerPage: pageSizes,
+                                      currentPage: currentPage
+                                  };
+                        let i = index
+                    "
+                >
+                    <th scope="row">
+                        {{ i + 1 + pageSizes * (currentPage - 1) }}
+                    </th>
+                    <td>{{ property.developer_name }}</td>
+                    <td>
+                        <a
+                            [routerLink]="[
+                                '/listing-details',
+                                property.property_id
+                            ]"
+                            >{{ property.property_name }}</a
+                        >
+                    </td>
+                    <td>{{ property.apartment }}</td>
+                    <td>{{ property.builder_price }}</td>
+                    <td>{{ property.status }}</td>
+                    <td>{{ property.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls
+            (pageChange)="currentPage = $event"
+            class="pagination"
+        ></pagination-controls>
+    </ng-container>
+    <div *ngIf="unlodedData" class="mt-3">
+        <p><b>Loading...</b></p>
+    </div>
+</div>
+
+<!-- </section> -->
+<!-- 
+<section class="city-area-two pt-70 pb-30">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="section-title">
+                    <span>Developers</span>
+                    <h2>Explore Best Developers In Area</h2>
+                    <p>
+                        Are you tired of searching high and low for the perfect
+                        property developer? Look no further! Propfinder is here
+                        to revolutionize the way you discover and track
+                        developers in your city. With our intuitive platform,
+                        you can effortlessly explore a curated list of top-rated
+                        developers and gain valuable insights into their
+                        projects.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="city-btn">
+                    <button (click)="openDeveloperList()" class="default-btn">
+                        {{ viewAllLabel }}<i class="bx bx-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fuid mt-3" [hidden]="viewDeveloperlist">
+            <div class="col-lg-12 col-sm-6">
+                <ul class="row align-items-center">
+                    <div
+                        class="col-lg-4 col-sm-6"
+                        *ngFor="let dev of mainDeveloperList$"
+                    >
+                        <a [routerLink]="['/developer', dev.developer_id]">
+                            <li>{{ dev.developer_name }}</li></a
+                        >
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="!devLoad" class="mt-3">
+            <p><b>Loading...</b></p>
+        </div>
+
+        <div class="row pt-45">
+            <div class="col-lg-4 col-md-6">
+                <div class="city-card">
+                    <a
+                        ><img
+                            src="assets/img/developer/dlf-mall.jpg"
+                            alt="Images"
+                    /></a>
+                    <div class="content">
+                        <a><h3>DLF</h3></a>
+                        <span>17 Locations</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="city-card">
+                    <a
+                        ><img
+                            src="assets/img/developer/m3m-prop.png"
+                            alt="Images"
+                    /></a>
+                    <div class="content">
+                        <a><h3>M3M</h3></a>
+                        <span>13 Locations</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="city-card">
+                    <a routerLink="/"
+                        ><img
+                            src="assets/img/developer/emaar-prop.jpg"
+                            alt="Images"
+                    /></a>
+                    <div class="content">
+                        <a routerLink="/"><h3>EMAAR</h3></a>
+                        <span>13 Locations</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-6">
+                <div class="city-card">
+                    <a routerLink="/"
+                        ><img
+                            src="assets/img/developer/supertech.jpeg"
+                            alt="Images"
+                    /></a>
+                    <div class="content">
+                        <a routerLink=""><h3>SUPERTECH</h3></a>
+                        <span>30 Locations</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 offset-md-3 offset-lg-0">
+                <div class="city-card">
+                    <a routerLink="/"
+                        ><img
+                            src="assets/img/developer/godrej-prop.png"
+                            alt="Images"
+                    /></a>
+                    <div class="content">
+                        <a routerLink="/"><h3>GODREJ</h3></a>
+                        <span>34 Locations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="process-area process-bg2">
+    <div class="process-into pt-100 pb-70">
+        <div class="container">
+            <div class="section-title text-center">
+                <span>Process</span>
+                <h2>See <b>How It Works</b></h2>
+                <p>
+                    Explore, Select, and Discover your ideal real estate journey
+                    with ease.
+                </p>
+            </div>
+
+            <div class="row pt-45">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="process-item">
+                        <div class="process-item-number number1">1</div>
+                        <i class="flaticon-position"></i>
+                        <div class="content">
+                            <h3>Discover Prime Locations</h3>
+                            <p>
+                                Discover ideal locations tailored to your
+                                preferences. From bustling cityscapes to serene
+                                suburbs, find the perfect setting for your real
+                                estate goals
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="process-item">
+                        <div class="process-item-number number2 active">2</div>
+                        <i class="flaticon-to-do-list"></i>
+                        <div class="content">
+                            <h3>Select Your Next Move</h3>
+                            <p>
+                                Choose your path with confidence. Whether you're
+                                searching for reputable developers, captivating
+                                projects, or top-rated properties, our platform
+                                empowers you to make informed decisions..
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6 offset-sm-3 offset-lg-0">
+                    <div class="process-item">
+                        <div class="process-item-number number3">3</div>
+                        <i class="flaticon-box"></i>
+                        <div class="content">
+                            <h3>Discover Your Dream Development</h3>
+                            <p>
+                                Embark on your search for the perfect
+                                development. With a vast database of projects
+                                and developers, we simplify the process, helping
+                                you find the real estate opportunity that fits
+                                your vision.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-line-2">
+            <img src="assets/img/shape/process-line2.png" alt="Images" />
+        </div>
+    </div>
+</section>
+
+<!-- <div class="video-area-two">
+    <div class="container">
+        <div class="video-option">
+            <a href="https://www.youtube.com/watch?v=07d2dXHYb94&t=6s" class="video-btn">
+                <i class='bx bx-play play-video'></i>
+                <span><i class='flaticon-arrow'></i> Play Video</span>
+            </a>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="counter-area-three">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6 col-md-3">
+                <div class="single-counter">
+                    <h3 class="text-color-white">1254</h3>
+                    <span>New Visiters Every Week</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-md-3">
+                <div class="single-counter">
+                    <h3 class="text-color-white">23165</h3>
+                    <span>New Visiters Every Week</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-md-3">
+                <div class="single-counter">
+                    <h3 class="text-color-white">4563</h3>
+                    <span>Won Amazing Awards</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-md-3">
+                <div class="single-counter">
+                    <h3 class="text-color-white">880</h3>
+                    <span>New Listing Every Week</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="place-area pt-100 pb-70">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-6">
+                <div class="section-title mb-45">
+                    <span>Desire Project</span>
+                    <h2>Most <b>Popular Projects</b></h2>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <div class="place-btn">
+                    <a routerLink="/listing" class="default-btn">Check out all Projects <i class='bx bx-plus'></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/developer/dlf-resident-2.jpeg" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">4.9</a></li>
+                            <li>
+                                <span>23 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star i-color'></i>
+                                <i class='bx bxs-star i-color'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-dark-orange">
+                        <a routerLink="/"><h3>Launch</h3></a>
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile.png" alt="Images">
+                            <h3>By, DLF</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i>DLF Phase 3, Gurgaon</span>
+                        <a [routerLink]="['/listing-details', 'DLF Independent Floors At DLF City Phase I And III']"><h3>DLF Independent Floors At DLF City Phase I And III </h3></a>
+                        <p>One home per floor ensuring maximum usable area.</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"> <a routerLink="/">₹ 4.50 Cr - ₹ 8.03 Cr</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/developer/dlf-primus.jpeg" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">5.0</a></li>
+                            <li>
+                                <span>30 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-color-blue">
+                        <a routerLink="/listing-details"><h3>Completed</h3></a>
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile2.png" alt="Images">
+                            <h3>By, DLF</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i> Sector 82A, Gurugram</span><br>
+                        <a [routerLink]="['/listing-details', 'DLF The Primus']"><h3>DLF The Primus </h3></a>
+                        <p>The 3 and 4 BHK apartments come with amenities like fire safety system, multipurpose hall .</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"><a routerLink="/">₹ 3.50 Cr - ₹ 8.03 Cr</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/developer/godrej-river.png" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">4.9</a></li>
+                            <li>
+                                <span>23 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star i-color'></i>
+                                <i class='bx bxs-star i-color'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-color-heliotrope">
+                        <a routerLink="/listing-details"><h3>Launch</h3></a>
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile3.png" alt="Images">
+                            <h3>By, Godrej Properties</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i> Mahalunge ,Pune</span><br>
+                        <a [routerLink]="['/listing-details', 'Godrej River Royale']"><h3>Godrej River Royale</h3></a>
+                        <p> The built-up area of property in Mahalunge ranges from 551 to 10,000 sq ft,.</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"><a routerLink="/listing-details">₹ 2.50 Cr - ₹ 3.41 Cr</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/place-area/place-area4.jpg" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">4.8</a></li>
+                            <li>
+                                <span>16 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star i-color'></i>
+                                <i class='bx bxs-star i-color'></i>
+                                <i class='bx bxs-star i-color'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-dark-orange">
+                        <a routerLink="/listing-details"><h3>Closed Now</h3></a> 
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile4.png" alt="Images">
+                            <h3>By, Debit Jhon</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i> 27th Brooklyn New York, USA</span>
+                        <a routerLink="/listing-details"><h3>Family Convenience Store</h3></a> 
+                        <p>Lorem ipsum dolor sit amet, consectetur  quam quaerat voluptatem.</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"><a routerLink="/">$560-890</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/place-area/place-area5.jpg" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">5.0</a></li>
+                            <li>
+                                <span>16 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-color-blue">
+                        <a routerLink="/listing-details"><h3>Closed Now</h3></a>
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile5.png" alt="Images">
+                            <h3>By, Kelvin Sasi</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i> 56 Street Square Plaza, NJ, USA</span>
+                        <a routerLink="/listing-details"><h3>Iconic Cafe in Onterio</h3></a>
+                        <p>Lorem ipsum dolor sit amet, consectetur  quam quaerat voluptatem.</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"><a routerLink="/">$300-600</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="place-card">
+                    <a routerLink="/listing-details" class="place-images"><img src="assets/img/place-area/place-area6.jpg" alt="Images"></a>
+
+                    <div class="rating">
+                        <ul>
+                            <li><a routerLink="/">5.0</a></li>
+                            <li>
+                                <span>39 Review</span>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                                <i class='bx bxs-star'></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="status-tag bg-color-green">
+                        <a routerLink="/listing-details"><h3>Open Now</h3></a>
+                    </div>
+
+                    <div class="content">
+                        <div class="content-profile">
+                            <img src="assets/img/place-area/place-area-profile6.png" alt="Images">
+                            <h3>By, Creiun Hitler</h3>
+                        </div>
+                        <span><i class="flaticon-cursor"></i> 34-42 Montgomery St , NY, USA</span>
+                        <a routerLink="/listing-details"><h3>Kentorin Hotel</h3></a>
+                        <p>Lorem ipsum dolor sit amet, consectetur  quam quaerat voluptatem.</p>
+                        <div class="content-tag">
+                            <ul>
+                                <li><a routerLink="/"><i class="flaticon-place"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-like"></i></a></li>
+                                <li><a routerLink="/"><i class="flaticon-workflow"></i></a></li>
+                            </ul>
+                            <h3 class="price"><a routerLink="/">$400-800</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="client-area mt-5">
+    <div class="container">
+        <div class="client-bg">
+            <div class="client-slider owl-carousel owl-theme">
+                <div class="client-item">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="client-img">
+                                <img [src]="latestPropertyList$[20].image_url" alt="Images">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="client-content">
+                                <a [routerLink]="['/listing-details', latestPropertyList$[20].property_id]"> <h3> {{latestPropertyList$[20].property_name}} </h3></a><br>
+                                <span> by {{latestPropertyList$[20].developer_name}} </span>
+                                <p> <b>Apartment: </b>{{latestPropertyList$[20].apartment}}</p>
+                                <p> <b>Address: </b>{{latestPropertyList$[20].address}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="client-item">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="client-img">
+                                <img [src]="latestPropertyList$[23].image_url" alt="Images">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="client-content">
+                                <a [routerLink]="['/listing-details', latestPropertyList$[23].property_id]"> <h3> {{latestPropertyList$[23].property_name}} </h3></a><br>
+                                <span>by {{latestPropertyList$[23].developer_name}} </span>
+                                <p> <b>Apartment: </b>{{latestPropertyList$[23].apartment}}</p>
+                                <p> <b>Address: </b>{{latestPropertyList$[23].address}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="client-item">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="client-img">
+                                <img [src]="latestPropertyList$[26].image_url" alt="Images">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="client-content">
+                                <a [routerLink]="['/listing-details', latestPropertyList$[26].property_id]"> <h3> {{latestPropertyList$[26].property_name}} </h3></a><br>
+                                <span> by{{latestPropertyList$[26].developer_name}} </span>
+                                <p> <b>Apartment: </b>{{latestPropertyList$[26].apartment}}</p>
+                                <p> <b>Address: </b>{{latestPropertyList$[26].address}}</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="application-area-two">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="application-content">
+                    <div class="section-title">
+                        <span>Download app</span>
+                        <h2>Get More In Our Application Sit Back And Enjoy</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. </p>
+                    </div>
+
+                    <div class="application-btn">
+                        <a href="#" class="application-play-btn">
+                            <img src="assets/img/google-play.svg" alt="svg">
+                            <div class="btn-content">
+                                <span>ANDROID APP ON</span>
+                                <h3>Google Play</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="application-play-btn">
+                            <img src="assets/img/company.svg" alt="svg">
+                            <div class="btn-content">
+                                <span>DOWNLOAD ON THE</span>
+                                <h3>App Store</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="application-img-two">
+                    <img src="assets/img/mobile2.png" alt="Images">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<app-footer-style-two></app-footer-style-two>

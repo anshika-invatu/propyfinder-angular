@@ -1,0 +1,68 @@
+/* component-name.component.scss */
+
+.inner-banner {
+    /* Set background image */
+    background-image: url('/assets/img/developer/dlf-list.jpeg');
+    
+    /* Adjust background properties */
+    background-size: cover; /* Cover the entire div */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    
+    /* Set dimensions for the div */
+    width: 100%;
+    height:80vh; /* Adjust height as needed */
+  }
+  
+  .Gallery-item{
+    width: 100%;
+    height:50vh
+  }
+  .Gallery-item img {
+    width: 100%; /* Make the image fill the entire width of its container */
+    height: 50vh; /* Make the image fill the entire height of its container */
+    object-fit: cover; /* Scale the image while preserving its aspect ratio, cropping if necessary */
+    object-position: center; /* Position the image at the center of its container */
+  }
+
+  .additional-information {
+    li {
+      width: 50%; // Adjusts the width for larger screens
+      margin-top: 10px; // Adjust the margin value as needed
+  
+      @media (max-width: 768px) {
+        width: 100%; // Adjusts the width for smaller screens
+      }
+    }
+    span{
+    margin-right: 3vh;
+
+    }
+  }
+
+  .gallery-img{
+    display: grid;
+    grid-template-columns: repeat(2,1fr); 
+    object-fit: cover;
+    object-position: center;
+    gap: 1rem; 
+    img{
+      // width: 100%;
+      height: 60vh;
+    }
+  }
+
+
+  @media only screen and (max-width : 767px) {
+
+    .additional-information{
+      display: flex;
+      flex-direction: column;
+      
+    }
+    .gallery-img{
+      grid-template-columns: repeat(1,1fr); 
+
+    }
+   
+  }
